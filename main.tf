@@ -106,17 +106,17 @@ resource "azurerm_storage_container" "storage_account" {
   container_access_type = each.value.container_access_type
 }
 
-resource "azurerm_private_endpoint" "storage_account" {
+resource "azurerm_private_endpoint" "storage_account_blob" {
   for_each = var.enable_private_endpoint == true ? { "Private Endpoint" = "True" } : {}
 
-  name                          = format("pep-%s", var.name)
+  name                          = format("pep-%s-blob", var.name)
   location                      = var.location
   resource_group_name           = var.resource_group_name
   subnet_id                     = var.virtual_network_subnet_private_endpoint_id
-  custom_network_interface_name = format("nic-%s", var.name)
+  custom_network_interface_name = format("nic-%s-blob", var.name)
 
   private_service_connection {
-    name                           = format("pl-%s", var.name)
+    name                           = format("pl-%s-blob", var.name)
     private_connection_resource_id = azurerm_storage_account.storage_account.id
     subresource_names              = ["Blob"]
     is_manual_connection           = false
@@ -166,7 +166,7 @@ resource "azurerm_private_endpoint" "storage_account_table" {
   private_service_connection {
     name                           = format("pl-%s-table", var.name)
     private_connection_resource_id = azurerm_storage_account.storage_account.id
-    subresource_names              = ["file"]
+    subresource_names              = ["table"]
     is_manual_connection           = false
   }
 
@@ -190,7 +190,7 @@ resource "azurerm_private_endpoint" "storage_account_queue" {
   private_service_connection {
     name                           = format("pl-%s-queue", var.name)
     private_connection_resource_id = azurerm_storage_account.storage_account.id
-    subresource_names              = ["file"]
+    subresource_names              = ["queue"]
     is_manual_connection           = false
   }
 
