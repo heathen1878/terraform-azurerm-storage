@@ -196,6 +196,24 @@ variable "private_dns_zone_ids" {
   type        = list(string)
 }
 
+variable "file_private_dns_zone_ids" {
+  description = "A list of Private DNS zone to integrate with Private Endpoint"
+  default     = []
+  type        = list(string)
+}
+
+variable "table_private_dns_zone_ids" {
+  description = "A list of Private DNS zone to integrate with Private Endpoint"
+  default     = []
+  type        = list(string)
+}
+
+variable "queue_private_dns_zone_ids" {
+  description = "A list of Private DNS zone to integrate with Private Endpoint"
+  default     = []
+  type        = list(string)
+}
+
 variable "public_network_access_enabled" {
   description = "Enable public network access?"
   default     = true

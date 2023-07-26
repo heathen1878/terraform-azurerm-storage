@@ -130,6 +130,78 @@ resource "azurerm_private_endpoint" "storage_account" {
   tags = var.tags
 }
 
+resource "azurerm_private_endpoint" "storage_account_file" {
+  for_each = var.enable_private_endpoint == true ? { "Private Endpoint" = "True" } : {}
+
+  name                          = format("pep-%s-file", var.name)
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  subnet_id                     = var.virtual_network_subnet_private_endpoint_id
+  custom_network_interface_name = format("nic-%s-file", var.name)
+
+  private_service_connection {
+    name                           = format("pl-%s-file", var.name)
+    private_connection_resource_id = azurerm_storage_account.storage_account.id
+    subresource_names              = ["file"]
+    is_manual_connection           = false
+  }
+
+  private_dns_zone_group {
+    name                 = "privatelink.file.core.windows.net"
+    private_dns_zone_ids = var.file_private_dns_zone_ids
+  }
+
+  tags = var.tags
+}
+
+resource "azurerm_private_endpoint" "storage_account_table" {
+  for_each = var.enable_private_endpoint == true ? { "Private Endpoint" = "True" } : {}
+
+  name                          = format("pep-%s-table", var.name)
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  subnet_id                     = var.virtual_network_subnet_private_endpoint_id
+  custom_network_interface_name = format("nic-%s-table", var.name)
+
+  private_service_connection {
+    name                           = format("pl-%s-table", var.name)
+    private_connection_resource_id = azurerm_storage_account.storage_account.id
+    subresource_names              = ["file"]
+    is_manual_connection           = false
+  }
+
+  private_dns_zone_group {
+    name                 = "privatelink.table.core.windows.net"
+    private_dns_zone_ids = var.table_private_dns_zone_ids
+  }
+
+  tags = var.tags
+}
+
+resource "azurerm_private_endpoint" "storage_account_queue" {
+  for_each = var.enable_private_endpoint == true ? { "Private Endpoint" = "True" } : {}
+
+  name                          = format("pep-%s-queue", var.name)
+  location                      = var.location
+  resource_group_name           = var.resource_group_name
+  subnet_id                     = var.virtual_network_subnet_private_endpoint_id
+  custom_network_interface_name = format("nic-%s-queue", var.name)
+
+  private_service_connection {
+    name                           = format("pl-%s-queue", var.name)
+    private_connection_resource_id = azurerm_storage_account.storage_account.id
+    subresource_names              = ["file"]
+    is_manual_connection           = false
+  }
+
+  private_dns_zone_group {
+    name                 = "privatelink.queue.core.windows.net"
+    private_dns_zone_ids = var.queue_private_dns_zone_ids
+  }
+
+  tags = var.tags
+}
+
 resource "azurerm_role_assignment" "storage_account" {
   for_each = var.iam
 
