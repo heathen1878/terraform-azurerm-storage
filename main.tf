@@ -110,8 +110,8 @@ resource "azurerm_storage_container" "storage_account" {
 resource "azurerm_storage_share" "storage_account" {
   for_each = var.file_share == true ? { "File Share" = "True" } : {}
 
-  name                 = format("%s-content", each.key)
-  storage_account_name = azurerm_storage_account.storage_account[each.key].name
+  name                 = format("%s-content", substr(azurerm_storage_account.storage_account.name, 2, -1))
+  storage_account_name = azurerm_storage_account.storage_account.name
   quota                = 1
 
 }
