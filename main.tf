@@ -107,7 +107,7 @@ resource "azurerm_storage_container" "storage_account" {
 }
 
 # TODO: Initially used by function apps - need extra work to be more flexible
-resource "azurerm_storage_share_file" "example" {
+resource "azurerm_storage_share" "storage_account" {
   for_each = var.file_share == true ? { "File Share" = "True" } : {}
 
   name                 = format("%s-content", each.key)
