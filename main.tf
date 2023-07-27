@@ -106,6 +106,17 @@ resource "azurerm_storage_container" "storage_account" {
   container_access_type = each.value.container_access_type
 }
 
+# TODO: Initially used by function apps - need extra work to be more flexible
+resource "azurerm_storage_share_file" "example" {
+  for_each = var.file_share == true ? { "File Share" = "True" } : {}
+
+  name                 = format("%s-content", each.key)
+  storage_account_name = azurerm_storage_account.storage_account[each.key].name
+  access_tier          = "hot"
+  quota                = 1
+
+}
+
 resource "azurerm_private_endpoint" "storage_account_blob" {
   for_each = var.enable_private_endpoint == true ? { "Private Endpoint" = "True" } : {}
 

@@ -128,6 +128,12 @@ variable "enable_private_endpoint" {
   type        = bool
 }
 
+variable "file_share" {
+  description = "Should a file share be created?"
+  default     = false
+  type        = bool
+}
+
 variable "iam" {
   description = "Account level RBAC assignments"
   type = map(object({
