@@ -112,7 +112,6 @@ resource "azurerm_storage_share" "storage_account" {
 
   name                 = format("%s-content", each.key)
   storage_account_name = azurerm_storage_account.storage_account[each.key].name
-  access_tier          = "hot"
   quota                = 1
 
 }
