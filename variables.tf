@@ -128,6 +128,12 @@ variable "enable_private_endpoint" {
   type        = bool
 }
 
+variable "file_share" {
+  description = "Should a file share be created?"
+  default     = false
+  type        = bool
+}
+
 variable "iam" {
   description = "Account level RBAC assignments"
   type = map(object({
@@ -191,6 +197,24 @@ variable "nfsv3_enabled" {
 }
 
 variable "private_dns_zone_ids" {
+  description = "A list of Private DNS zone to integrate with Private Endpoint"
+  default     = []
+  type        = list(string)
+}
+
+variable "file_private_dns_zone_ids" {
+  description = "A list of Private DNS zone to integrate with Private Endpoint"
+  default     = []
+  type        = list(string)
+}
+
+variable "table_private_dns_zone_ids" {
+  description = "A list of Private DNS zone to integrate with Private Endpoint"
+  default     = []
+  type        = list(string)
+}
+
+variable "queue_private_dns_zone_ids" {
   description = "A list of Private DNS zone to integrate with Private Endpoint"
   default     = []
   type        = list(string)
