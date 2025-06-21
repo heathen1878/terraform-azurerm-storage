@@ -1,8 +1,25 @@
-output "storage_account" {
-  value = {
-    id                    = azurerm_storage_account.storage_account.id
-    primary_blob_endpoint = azurerm_storage_account.storage_account.primary_blob_endpoint
-    primary_access_key    = azurerm_storage_account.storage_account.primary_access_key
-  }
-  sensitive = true
+output "container" {
+  description = "Storage containers"
+  value       = azurerm_storage_container.this
+}
+
+output "queue" {
+  description = "Storage queues"
+  value       = azurerm_storage_queue.this
+}
+
+output "share" {
+  description = "Storage shares"
+  value       = azurerm_storage_share.this
+}
+
+output "account" {
+  description = "Storage accounts"
+  value       = azurerm_storage_account.this
+  sensitive   = true
+}
+
+output "table" {
+  description = "Storage tables"
+  value       = azurerm_storage_table.this
 }

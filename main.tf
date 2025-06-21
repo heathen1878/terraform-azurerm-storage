@@ -386,7 +386,7 @@ resource "azurerm_private_endpoint" "web" {
 module "diagnostics" {
   for_each = var.diagnostic_settings
 
-  source = "heathen1878/diagnostic-logging/azurerm"
+  source  = "heathen1878/diagnostic-logging/azurerm"
   version = "1.0.0"
 
   name                           = each.value.name
